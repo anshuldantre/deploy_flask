@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
+    <title>Login Default</title>
+</head>
+<body>
+    <div class="container">
+        <div class="d-flex justify-content-between mt-3 fs-4">
+            <p>Welcome {{ first_name }}</p>
+            <Div>
+                <a href="/recipe/new">+ Create</a>
+            </Div>
+            <form action="/logout" method="post">
+                <div>
+                    <input class="btn btn-primary fw-bold" type="submit" value="Logout">
+                </div>
+            </form>
+        </div>
+        <h3>All posted recipes:</h3>
+        <br>
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <td>Name</td>
+                    <td>Under</td>
+                    <td>Posted By</td>
+                    <td>Actions</a></td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for recipe in recipes %}
+                <tr>
+                    <td>{{ recipe.name }} </td>
+                    <td>{{ recipe.under_30_min }}</td>
+                    <td>{{ recipe.cook.first_name }} {{ recipe.cook.last_name }}</td>
+                    <td> <a href="/recipe/{{ recipe.id}}">view recipe</a> 
+                        {% if recipe.user_id == session.logged_in_user_id %}
+                            | <a href="/recipe/edit/{{recipe.id}}">edit</a> | <a href="/delete/{{recipe.id}}">delete</a> 
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
